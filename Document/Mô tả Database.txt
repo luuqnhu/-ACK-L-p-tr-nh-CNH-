@@ -1,0 +1,38 @@
+﻿- Book:
+ + ID: int, primary key, auto increase //tự động tăng mỗi lần có sách mới được thêm vào
+ + Name: varchar(30) //tên sách
+
+- Carl: //giỏ hàng - mỗi giỏ hàng thuộc về một User duy nhất và có thể có nhiều quyển sách
+ + ID: int, primary key, auto increase //tự động tăng mỗi lần giỏ hàng mới được tạo
+ + User ID: int //ID người dùng tạo giỏ hàng
+
+- Order: //danh sách đặt hàng
+ + OrderID: int //tự động tăng mỗi lần tạo đơn đặt hàng mới
+ + Status: boolean //tình trạng đơn đặt hàng: đã giao/chưa giao
+ + Sum: int //tổng tiền của đơn đặt hàng
+ + NumberofBook: int //số lượng sách trong đơn hàng
+ + CarlID: int //khi người dùng hoàn tất việc thêm sách vào giỏ hàng sau đó chọn đặt hàng, ID giỏ hàng đó sẽ đc thêm vào bảng Order
+
+- User:
+ + User ID: int, primary key, auto increase //tự động tăng mỗi lần có tài khoản mới được tạo
+ + Username: varchar(10)
+ + Password: varchar(10)
+ + Fullname: varchar(40)
+ + Email: varchar(25)
+ + Phone: varchar(15)
+
+- BookDetail: //mỗi quyển sách chỉ có một thông tin chi tiết tương ứng
+ + ID: int, primary key, auto increase
+ + Author: varchar(30)
+ + Price: int
+ + Language: varchar(10)
+ + Genre: varchar(20)
+ + NumberofPage: int
+ + Publisher: varchar(25)
+ + BookID: int //ID của sách trong table Book
+
+- CarlDetail: //Chi tiết giỏ hàng - mỗi 
+ + ID: int, primary key, auto increase
+ + CarlID: int //ID của giỏ hàng
+ + BookID: int //ID của sách được người dùng thêm vào giỏ hàng
+ + Number: int //Số lượng của quyển sách đó
