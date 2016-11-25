@@ -18,6 +18,7 @@
  + Username: varchar(10)
  + Password: varchar(10)
  + Fullname: varchar(40)
+ + Level: varchar(8)
  + Email: varchar(25)
  + Phone: varchar(15)
 
