@@ -1,0 +1,18 @@
+#header{
+	height: 100px;
+	background-color: #1abc9c;
+}
+
+#header_header{
+	height: 10px;
+	background-color: #16a085;
+}
+
+#login_information{
+	background-color: #16a085;
+}
+
+#footer{
+	height: 100px;
+	background-color: yellow;
+}
