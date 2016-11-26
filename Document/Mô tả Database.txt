@@ -1,6 +1,7 @@
 ﻿- Book:
  + ID: int, primary key, auto increase //tự động tăng mỗi lần có sách mới được thêm vào
  + Name: varchar(30) //tên sách
+ + Number: int //số lượng còn lại
 
 - Carl: //giỏ hàng - mỗi giỏ hàng thuộc về một User duy nhất và có thể có nhiều quyển sách
  + ID: int, primary key, auto increase //tự động tăng mỗi lần giỏ hàng mới được tạo
@@ -25,6 +26,7 @@
 - BookDetail: //mỗi quyển sách chỉ có một thông tin chi tiết tương ứng
  + ID: int, primary key, auto increase
  + Author: varchar(30)
+ + CoverImage: 
  + Price: int
  + Language: varchar(10)
  + Genre: varchar(20)
