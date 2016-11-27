@@ -7,7 +7,7 @@
  + ID: int, primary key, auto increase //tự động tăng mỗi lần giỏ hàng mới được tạo
  + User ID: int //ID người dùng tạo giỏ hàng
 
-- Order: //danh sách đặt hàng
+- OrderList: //danh sách đặt hàng
  + OrderID: int //tự động tăng mỗi lần tạo đơn đặt hàng mới
  + Status: boolean //tình trạng đơn đặt hàng: đã giao/chưa giao
  + Sum: int //tổng tiền của đơn đặt hàng
