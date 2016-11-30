@@ -22,3 +22,35 @@
 	height: 100px;
 	background-color: #f0a52b; /*mau footer*/
 }
+
+#menu{
+	color: white;
+	background-color: #d35400;
+}
+
+a{
+	color: white;
+}
+
+a:link{
+	text-decoration: underline;
+	color: white;
+}
+
+a:hover{
+	text-decoration: none;
+	color: white;
+}
+
+a:active, a:visited{
+	text-decoration: underline;
+	color: white;
+}
+
+#content{
+	height:800px; 
+	border-left: solid 2px #d35400;
+	border-right: solid 2px #d35400;
+	border-bottom: none;
+	border-top: none;
+}
