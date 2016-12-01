@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2016 at 10:35 AM
+-- Generation Time: Dec 01, 2016 at 10:47 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -76,7 +76,7 @@ INSERT INTO `bookdetail` (`ID`, `Author`, `CoverImage`, `Price`, `Language`, `Ge
 
 CREATE TABLE `carl` (
   `ID` int(11) UNSIGNED NOT NULL,
-  `UserID` int(11) NOT NULL
+  `UserID` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -87,8 +87,8 @@ CREATE TABLE `carl` (
 
 CREATE TABLE `carldetail` (
   `ID` int(11) UNSIGNED NOT NULL,
-  `CarlID` int(11) NOT NULL,
-  `BookID` int(11) NOT NULL,
+  `CarlID` int(11) UNSIGNED NOT NULL,
+  `BookID` int(11) UNSIGNED NOT NULL,
   `Number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -103,7 +103,7 @@ CREATE TABLE `orderlist` (
   `Status` tinyint(1) NOT NULL,
   `Sum` int(11) NOT NULL,
   `NumberofBook` int(11) NOT NULL,
-  `CarlID` int(11) NOT NULL
+  `CarlID` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -143,19 +143,24 @@ ALTER TABLE `bookdetail`
 -- Indexes for table `carl`
 --
 ALTER TABLE `carl`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indexes for table `carldetail`
 --
 ALTER TABLE `carldetail`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `CarlID` (`CarlID`),
+  ADD KEY `BookID` (`BookID`),
+  ADD KEY `BookID_2` (`BookID`);
 
 --
 -- Indexes for table `orderlist`
 --
 ALTER TABLE `orderlist`
-  ADD PRIMARY KEY (`OrderID`);
+  ADD PRIMARY KEY (`OrderID`),
+  ADD KEY `CarlID` (`CarlID`);
 
 --
 -- Indexes for table `user`
@@ -206,6 +211,25 @@ ALTER TABLE `user`
 --
 ALTER TABLE `bookdetail`
   ADD CONSTRAINT `bookdetail_ibfk_1` FOREIGN KEY (`BookID`) REFERENCES `book` (`ID`);
+
+--
+-- Constraints for table `carl`
+--
+ALTER TABLE `carl`
+  ADD CONSTRAINT `carl_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
+
+--
+-- Constraints for table `carldetail`
+--
+ALTER TABLE `carldetail`
+  ADD CONSTRAINT `carldetail_ibfk_1` FOREIGN KEY (`CarlID`) REFERENCES `carl` (`ID`),
+  ADD CONSTRAINT `carldetail_ibfk_2` FOREIGN KEY (`BookID`) REFERENCES `book` (`ID`);
+
+--
+-- Constraints for table `orderlist`
+--
+ALTER TABLE `orderlist`
+  ADD CONSTRAINT `orderlist_ibfk_1` FOREIGN KEY (`CarlID`) REFERENCES `carl` (`ID`);
 --
 -- Database: `phpmyadmin`
 --
@@ -272,6 +296,13 @@ CREATE TABLE `pma__designer_settings` (
   `username` varchar(64) COLLATE utf8_bin NOT NULL,
   `settings_data` text COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Settings related to Designer';
+
+--
+-- Dumping data for table `pma__designer_settings`
+--
+
+INSERT INTO `pma__designer_settings` (`username`, `settings_data`) VALUES
+('root', '{"angular_direct":"direct","relation_lines":"true","snap_to_grid":"off"}');
 
 -- --------------------------------------------------------
 
@@ -355,7 +386,7 @@ CREATE TABLE `pma__recent` (
 --
 
 INSERT INTO `pma__recent` (`username`, `tables`) VALUES
-('root', '[{"db":"bookonline","table":"book"},{"db":"bookonline","table":"bookdetail"},{"db":"bookonline","table":"carl"}]');
+('root', '[{"db":"bookonline","table":"book"},{"db":"bookonline","table":"bookdetail"},{"db":"bookonline","table":"carl"},{"db":"bookonline","table":"carldetail"},{"db":"bookonline","table":"orderlist"},{"db":"bookonline","table":"user"}]');
 
 -- --------------------------------------------------------
 
@@ -377,7 +408,11 @@ CREATE TABLE `pma__relation` (
 --
 
 INSERT INTO `pma__relation` (`master_db`, `master_table`, `master_field`, `foreign_db`, `foreign_table`, `foreign_field`) VALUES
-('bookonline', 'bookdetail', 'BookID', 'bookonline', 'book', 'ID');
+('bookonline', 'bookdetail', 'BookID', 'bookonline', 'book', 'ID'),
+('bookonline', 'carl', 'UserID', 'bookonline', 'user', 'UserID'),
+('bookonline', 'carldetail', 'BookID', 'bookonline', 'book', 'ID'),
+('bookonline', 'carldetail', 'CarlID', 'bookonline', 'carl', 'ID'),
+('bookonline', 'orderlist', 'CarlID', 'bookonline', 'carl', 'ID');
 
 -- --------------------------------------------------------
 
