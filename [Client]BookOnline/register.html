@@ -1,1 +1,54 @@
-Register page
+<div class="container-fluid">
+	<!-- header -->
+	<div class="row">
+		<div class="col-md-12" id="header_header"></div>
+	</div>
+	<div class="row" style="color: white">
+		<div class="col-md-12" id="header">
+			<a href="#/" style="float: left"><img src="image/logo.png" alt="Image" height="100" width="100"></a>
+			<h3 style="margin-left:10px; margin-top: 40px; float: left">Book Online</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" id="login_information">
+			<div style="float: right; margin-top: 5px;">
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+	
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-4 col-md-offset-4">
+			<form action="" method="POST" role="form">
+				<legend>Đăng ký</legend>
+				
+				<div class="form-group">
+					<label for="fullname">Full name: </label>
+					<input type="text" class="form-control" id="fullname" placeholder="Your name..." required="true">
+				</div>
+
+				<div class="form-group">
+					<label for="username">User Name: </label>
+					<input type="text" class="form-control" id="username" placeholder="Your user name ..." required="true">
+				</div>
+				
+				<div class="form-group">
+					<label for="password">Password: </label>
+					<input type="password" class="form-control" id="password" placeholder="Your password..." required="true">
+				</div>
+
+				<div class="form-group">
+					<label for="password_comfirm">Confirm Password: </label>
+					<input type="password" class="form-control" id="password_comfirm" placeholder="Your password comfirm..." required="true">
+				</div>
+
+				<div class="form-group">
+					<label for="email">Email: </label>
+					<input type="password" class="form-control" id="email" placeholder="Your email address..." required="true">
+				</div>
+			
+				<button type="submit" class="btn btn-primary">Đăng nhập</button>
+			</form>
+		</div>
+	</div>
+</div>
