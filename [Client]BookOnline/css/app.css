@@ -48,9 +48,17 @@ a:active, a:visited{
 }
 
 #content{
-	height:800px; 
 	border-left: solid 2px #d35400;
 	border-right: solid 2px #d35400;
 	border-bottom: none;
+	border-top: none;
+}
+
+.comment{
+	margin-left: 10px;
+	margin-right: 10px;
+	border-left: none;
+	border-right: none;
+	border-bottom: 2px solid #d35400;
 	border-top: none;
 }
