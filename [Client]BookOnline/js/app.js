@@ -25,5 +25,8 @@ myApp.config(function($routeProvider){
 });
 
 myApp.controller('bookonline', function($scope){
-
+	$scope.abc = function(){
+		alert("abc");
+		window.location = "#/login";
+	}
 });

@@ -25,7 +25,6 @@
 
 #menu{
 	color: white;
-	background-color: #d35400;
 }
 
 a{
@@ -47,7 +46,27 @@ a:active, a:visited{
 	color: white;
 }
 
+#menu ul li{
+	list-style:none;
+    line-height: 30px;
+    background: #e67e22;
+    margin: 2px;
+}
+
+#menu ul li a{
+	margin-left: 10px;
+}
+
+#menu h3{
+	padding-left: 10px;
+	list-style:none;
+    line-height: 30px;
+    background: #d35400;
+    margin: 2px;
+}
+
 #content{
+	height: 800px;
 	border-left: solid 2px #d35400;
 	border-right: solid 2px #d35400;
 	border-bottom: none;
