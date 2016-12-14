@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2016 at 10:47 AM
+-- Generation Time: Dec 14, 2016 at 04:51 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -25,100 +25,91 @@ USE `bookonline`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book`
+-- Table structure for table `chitietdonhang`
 --
 
-CREATE TABLE `book` (
-  `ID` int(11) UNSIGNED NOT NULL,
-  `Name` varchar(100) NOT NULL,
-  `Number` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `book`
---
-
-INSERT INTO `book` (`ID`, `Name`, `Number`) VALUES
-(1, 'Harry Potter and The Chamber of Secrets', 20),
-(2, 'The Hunger Games', 50);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bookdetail`
---
-
-CREATE TABLE `bookdetail` (
-  `ID` int(11) UNSIGNED NOT NULL,
-  `Author` varchar(30) NOT NULL,
-  `CoverImage` varchar(80) NOT NULL,
-  `Price` int(11) NOT NULL,
-  `Language` varchar(10) NOT NULL,
-  `Gerne` varchar(20) NOT NULL,
-  `NumberofPage` int(11) NOT NULL,
-  `Publisher` varchar(25) NOT NULL,
-  `BookID` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bookdetail`
---
-
-INSERT INTO `bookdetail` (`ID`, `Author`, `CoverImage`, `Price`, `Language`, `Gerne`, `NumberofPage`, `Publisher`, `BookID`) VALUES
-(1, 'J.K Rowling', '///', 84000, 'Vietnamese', 'Fantasy', 400, 'NXB Tre', 1),
-(4, 'Suzanne Collins', '///', 67200, 'Vietnamese', 'Fantasy', 400, 'NXB Nha Nam', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carl`
---
-
-CREATE TABLE `carl` (
-  `ID` int(11) UNSIGNED NOT NULL,
-  `UserID` int(11) UNSIGNED NOT NULL
+CREATE TABLE `chitietdonhang` (
+  `IdChiTietDonHang` int(11) UNSIGNED NOT NULL,
+  `IdUser` int(11) UNSIGNED NOT NULL,
+  `IdBook` int(11) UNSIGNED NOT NULL,
+  `SoLuong` int(11) NOT NULL,
+  `DiaChiNhan` varchar(5) NOT NULL,
+  `SDTNhan` varchar(15) NOT NULL,
+  `IdDonHang` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carldetail`
+-- Table structure for table `donhang`
 --
 
-CREATE TABLE `carldetail` (
-  `ID` int(11) UNSIGNED NOT NULL,
-  `CarlID` int(11) UNSIGNED NOT NULL,
-  `BookID` int(11) UNSIGNED NOT NULL,
-  `Number` int(11) NOT NULL
+CREATE TABLE `donhang` (
+  `IdDonHang` int(11) UNSIGNED NOT NULL,
+  `IdUser` int(11) UNSIGNED NOT NULL,
+  `TongGia` int(11) NOT NULL,
+  `TrangThai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderlist`
+-- Table structure for table `sach`
 --
 
-CREATE TABLE `orderlist` (
-  `OrderID` int(11) UNSIGNED NOT NULL,
-  `Status` tinyint(1) NOT NULL,
-  `Sum` int(11) NOT NULL,
-  `NumberofBook` int(11) NOT NULL,
-  `CarlID` int(11) UNSIGNED NOT NULL
+CREATE TABLE `sach` (
+  `IdSach` int(11) UNSIGNED NOT NULL,
+  `TenSach` varchar(100) NOT NULL,
+  `SoLuongConLai` int(11) NOT NULL,
+  `TacGia` varchar(50) NOT NULL,
+  `Gia` int(11) NOT NULL,
+  `NgonNgu` varchar(10) NOT NULL,
+  `SoTrang` int(11) NOT NULL,
+  `AnhBia` varchar(30) NOT NULL,
+  `NXB` varchar(25) NOT NULL,
+  `IdTheLoai` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sach`
+--
+
+INSERT INTO `sach` (`IdSach`, `TenSach`, `SoLuongConLai`, `TacGia`, `Gia`, `NgonNgu`, `SoTrang`, `AnhBia`, `NXB`, `IdTheLoai`) VALUES
+(1, 'Harry Potter and The Deathly Hallows', 50, 'J.K Rowling', 150000, 'Vietnamese', 700, 'sdsfdf', 'NXB Tre', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `theloai`
 --
 
-CREATE TABLE `user` (
-  `UserID` int(11) UNSIGNED NOT NULL,
+CREATE TABLE `theloai` (
+  `IdTheLoai` int(11) UNSIGNED NOT NULL,
+  `TenTheLoai` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `theloai`
+--
+
+INSERT INTO `theloai` (`IdTheLoai`, `TenTheLoai`) VALUES
+(1, 'Romance'),
+(2, 'Fantasy'),
+(3, 'Classic');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `IDUser` int(11) UNSIGNED NOT NULL,
   `Username` varchar(10) NOT NULL,
-  `Password` varchar(10) NOT NULL,
-  `Fullname` varchar(40) NOT NULL,
-  `Level` varchar(8) NOT NULL,
-  `Email` varchar(25) NOT NULL,
+  `Password` varchar(20) NOT NULL,
+  `Fullname` varchar(5) NOT NULL,
+  `Level` varchar(10) NOT NULL,
+  `Email` varchar(30) NOT NULL,
   `Phone` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -127,109 +118,92 @@ CREATE TABLE `user` (
 --
 
 --
--- Indexes for table `book`
+-- Indexes for table `chitietdonhang`
 --
-ALTER TABLE `book`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `chitietdonhang`
+  ADD PRIMARY KEY (`IdChiTietDonHang`),
+  ADD KEY `IdUser` (`IdUser`),
+  ADD KEY `IdBook` (`IdBook`),
+  ADD KEY `IdDonHang` (`IdDonHang`);
 
 --
--- Indexes for table `bookdetail`
+-- Indexes for table `donhang`
 --
-ALTER TABLE `bookdetail`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `BookID` (`BookID`);
+ALTER TABLE `donhang`
+  ADD PRIMARY KEY (`IdDonHang`),
+  ADD KEY `IdUser` (`IdUser`);
 
 --
--- Indexes for table `carl`
+-- Indexes for table `sach`
 --
-ALTER TABLE `carl`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `UserID` (`UserID`);
+ALTER TABLE `sach`
+  ADD PRIMARY KEY (`IdSach`),
+  ADD KEY `IdTheLoai` (`IdTheLoai`);
 
 --
--- Indexes for table `carldetail`
+-- Indexes for table `theloai`
 --
-ALTER TABLE `carldetail`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `CarlID` (`CarlID`),
-  ADD KEY `BookID` (`BookID`),
-  ADD KEY `BookID_2` (`BookID`);
+ALTER TABLE `theloai`
+  ADD PRIMARY KEY (`IdTheLoai`);
 
 --
--- Indexes for table `orderlist`
+-- Indexes for table `users`
 --
-ALTER TABLE `orderlist`
-  ADD PRIMARY KEY (`OrderID`),
-  ADD KEY `CarlID` (`CarlID`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`UserID`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`IDUser`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `book`
+-- AUTO_INCREMENT for table `chitietdonhang`
 --
-ALTER TABLE `book`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `chitietdonhang`
+  MODIFY `IdChiTietDonHang` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `bookdetail`
+-- AUTO_INCREMENT for table `donhang`
 --
-ALTER TABLE `bookdetail`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `donhang`
+  MODIFY `IdDonHang` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `carl`
+-- AUTO_INCREMENT for table `sach`
 --
-ALTER TABLE `carl`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `sach`
+  MODIFY `IdSach` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `carldetail`
+-- AUTO_INCREMENT for table `theloai`
 --
-ALTER TABLE `carldetail`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `theloai`
+  MODIFY `IdTheLoai` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `orderlist`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `orderlist`
-  MODIFY `OrderID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `UserID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `users`
+  MODIFY `IDUser` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `bookdetail`
+-- Constraints for table `chitietdonhang`
 --
-ALTER TABLE `bookdetail`
-  ADD CONSTRAINT `bookdetail_ibfk_1` FOREIGN KEY (`BookID`) REFERENCES `book` (`ID`);
+ALTER TABLE `chitietdonhang`
+  ADD CONSTRAINT `chitietdonhang_ibfk_1` FOREIGN KEY (`IdUser`) REFERENCES `users` (`IDUser`),
+  ADD CONSTRAINT `chitietdonhang_ibfk_2` FOREIGN KEY (`IdBook`) REFERENCES `sach` (`IdSach`),
+  ADD CONSTRAINT `chitietdonhang_ibfk_3` FOREIGN KEY (`IdDonHang`) REFERENCES `donhang` (`IdDonHang`);
 
 --
--- Constraints for table `carl`
+-- Constraints for table `donhang`
 --
-ALTER TABLE `carl`
-  ADD CONSTRAINT `carl_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
+ALTER TABLE `donhang`
+  ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`IdUser`) REFERENCES `users` (`IDUser`);
 
 --
--- Constraints for table `carldetail`
+-- Constraints for table `sach`
 --
-ALTER TABLE `carldetail`
-  ADD CONSTRAINT `carldetail_ibfk_1` FOREIGN KEY (`CarlID`) REFERENCES `carl` (`ID`),
-  ADD CONSTRAINT `carldetail_ibfk_2` FOREIGN KEY (`BookID`) REFERENCES `book` (`ID`);
-
---
--- Constraints for table `orderlist`
---
-ALTER TABLE `orderlist`
-  ADD CONSTRAINT `orderlist_ibfk_1` FOREIGN KEY (`CarlID`) REFERENCES `carl` (`ID`);
+ALTER TABLE `sach`
+  ADD CONSTRAINT `sach_ibfk_1` FOREIGN KEY (`IdTheLoai`) REFERENCES `theloai` (`IdTheLoai`);
 --
 -- Database: `phpmyadmin`
 --
@@ -302,7 +276,7 @@ CREATE TABLE `pma__designer_settings` (
 --
 
 INSERT INTO `pma__designer_settings` (`username`, `settings_data`) VALUES
-('root', '{"angular_direct":"direct","relation_lines":"true","snap_to_grid":"off"}');
+('root', '{"angular_direct":"angular","relation_lines":"true","snap_to_grid":"on","small_big_all":">","full_screen":"on"}');
 
 -- --------------------------------------------------------
 
@@ -386,7 +360,7 @@ CREATE TABLE `pma__recent` (
 --
 
 INSERT INTO `pma__recent` (`username`, `tables`) VALUES
-('root', '[{"db":"bookonline","table":"book"},{"db":"bookonline","table":"bookdetail"},{"db":"bookonline","table":"carl"},{"db":"bookonline","table":"carldetail"},{"db":"bookonline","table":"orderlist"},{"db":"bookonline","table":"user"}]');
+('root', '[{"db":"bookonline","table":"chitietdonhang"},{"db":"bookonline","table":"users"},{"db":"bookonline","table":"donhang"},{"db":"bookonline","table":"theloai"},{"db":"bookonline","table":"sach"},{"db":"bookonline","table":"book"},{"db":"bookonline","table":"orderlist"},{"db":"bookonline","table":"user"},{"db":"bookonline","table":"carldetail"},{"db":"bookonline","table":"carl"}]');
 
 -- --------------------------------------------------------
 
@@ -408,11 +382,11 @@ CREATE TABLE `pma__relation` (
 --
 
 INSERT INTO `pma__relation` (`master_db`, `master_table`, `master_field`, `foreign_db`, `foreign_table`, `foreign_field`) VALUES
-('bookonline', 'bookdetail', 'BookID', 'bookonline', 'book', 'ID'),
-('bookonline', 'carl', 'UserID', 'bookonline', 'user', 'UserID'),
-('bookonline', 'carldetail', 'BookID', 'bookonline', 'book', 'ID'),
-('bookonline', 'carldetail', 'CarlID', 'bookonline', 'carl', 'ID'),
-('bookonline', 'orderlist', 'CarlID', 'bookonline', 'carl', 'ID');
+('bookonline', 'chitietdonhang', 'IdBook', 'bookonline', 'sach', 'IdSach'),
+('bookonline', 'chitietdonhang', 'IdDonHang', 'bookonline', 'donhang', 'IdDonHang'),
+('bookonline', 'chitietdonhang', 'IdUser', 'bookonline', 'users', 'IDUser'),
+('bookonline', 'donhang', 'IdUser', 'bookonline', 'users', 'IDUser'),
+('bookonline', 'sach', 'IdTheLoai', 'bookonline', 'theloai', 'IdTheLoai');
 
 -- --------------------------------------------------------
 
@@ -504,7 +478,7 @@ CREATE TABLE `pma__userconfig` (
 --
 
 INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
-('root', '2016-12-01 06:09:28', '{"collation_connection":"utf8mb4_unicode_ci"}');
+('root', '2016-12-01 10:36:20', '{"collation_connection":"utf8mb4_unicode_ci"}');
 
 -- --------------------------------------------------------
 
