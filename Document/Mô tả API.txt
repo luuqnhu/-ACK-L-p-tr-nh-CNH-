@@ -4,7 +4,6 @@
 2. API Add thể loại mới:
 	Method: POST
 	URL: http://locahost:3000/gernes/new
-	Input: TenTheLoai: value
 3. API Update thể loại:
 	Method: PUT
 	URL: http://localhost:3000/gernes/update
@@ -14,3 +13,5 @@
 	Method: DELETE
 	URL: http://locahost:3000/gernes/delete
 	Input: IdTheLoai: value
+	Input: TenTheLoai: value
+
