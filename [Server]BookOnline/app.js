@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var getByGerne = require('./routes/GetBookByGerne');
+var getAllGerne = require('./routes/GetAllGerne');
+var addNewGerne = require('./routes/AddNewGerne');
+var deleteGerne = require('./routes/DeleteGerne');
+var updateGerne = require('./routes/UpdateGerne');
 
 var app = express();
 
@@ -25,7 +28,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/books/gerne',getByGerne);
+app.use('/gernes/all',getAllGerne);
+app.use('/gernes/new', addNewGerne);
+app.use('/gernes/delete', deleteGerne);
+app.use('/gernes/update', updateGerne);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
