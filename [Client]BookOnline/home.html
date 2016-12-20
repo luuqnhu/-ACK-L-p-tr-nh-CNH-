@@ -5,15 +5,15 @@
 	</div>
 	<div class="row" style="color: white">
 		<div class="col-md-12" id="header">
-			<a href="#/" style="float: left"><img src="image/logo.png" alt="Image" height="100" width="100"></a>
+			<a href="#/home" style="float: left"><img src="image/logo.png" alt="Image" height="100" width="100"></a>
 			<h3 style="margin-left:10px; margin-top: 40px; float: left">Book Online</h3>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12" id="login_information">
 			<div style="float: right; margin-top: 5px;">
-				<button type="button" class="btn btn-default" style="width: 100px;">Login</button>
-				<button type="button" class="btn btn-default" style="width: 100px;">Register</button>
+				<button type="button" class="btn btn-default" style="width: 100px;" ng-click="login()">Login</button>
+				<button type="button" class="btn btn-default" style="width: 100px;" ng-click="register()">Register</button>
 			</div>
 		</div>
 	</div>
@@ -23,13 +23,8 @@
 		<!-- menu -->
 		<div class="col-md-2 col-md-offset-1" id="menu">
 			<h3>Thể loại sách</h3>
-
-			<ul>
-				<li><a href="" ng-click="abc()">Thể loại 1</a></li>
-				<li><a href="">Thể loại 2</a></li>
-				<li><a href="">Thể loại 3</a></li>
-				<li><a href="">Thể loại 4</a></li>
-				<li><a href="">Thể loại 5</a></li>
+			<ul ng-repeat="type in types">
+				<li><a href="#/home/{{type.id}}">{{type.name}}</a></li>
 			</ul>	
 		</div><!-- end menu -->
 
@@ -41,52 +36,17 @@
 					<input type="text" name="" id="search_key" class="form-control" value="" required="required" pattern="" title="" placeholder="Nhập từ khóa tìm kiếm.....">
 				</div>
 				<div class="col-md-2">
-					<button type="button" class="btn btn-default">Tìm kiếm</button>
+					<button id="keyname" type="button" class="btn btn-default" ng-click="findName()">Tìm kiếm</button>
 				</div>
 			</div>
 
 			<!-- danh sach sach hien thi -->
-			<div style="margin-top: 10px;">
+			<div style="margin-top: 10px;" ng-repeat="book in dsbook">
 				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="`" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách</h5>
-					<h5>Tác giả</h5>
-					<h5>Giá</h5>
-				</div>
-
-				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="`" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách</h5>
-					<h5>Tác giả</h5>
-					<h5>Giá</h5>
-				</div>
-
-				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="`" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách</h5>
-					<h5>Tác giả</h5>
-					<h5>Giá</h5>
-				</div>
-
-				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="`" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách</h5>
-					<h5>Tác giả</h5>
-					<h5>Giá</h5>
-				</div>
-
-				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="`" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách</h5>
-					<h5>Tác giả</h5>
-					<h5>Giá</h5>
-				</div>
-
-				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="`" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách</h5>
-					<h5>Tác giả</h5>
-					<h5>Giá</h5>
+					<img src="" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
+					<h5>Tên sách: {{book.name}}</h5>
+					<h5>Tác giả: {{book.author}}</h5>
+					<h5>Giá: {{book.cost}}</h5>
 				</div>
 			</div>
 		</div><!-- end noi dung hien thi -->

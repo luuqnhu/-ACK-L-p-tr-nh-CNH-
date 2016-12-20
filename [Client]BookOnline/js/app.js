@@ -1,32 +1,66 @@
-var myApp = angular.module('myApp', ['ngRoute']);
-myApp.config(function($routeProvider){
+var app = angular.module('myApp', ['ngRoute']);
+
+app.config(['$routeProvider', function($routeProvider){
 	$routeProvider
-	.when('/', {
-		templateUrl: 'home.html'
+	.when('/home/:type', {
+		templateUrl: 'home.html',
+		controller: 'homeController'
 	})
 	.when('/login', {
-		templateUrl: 'login.html'
+		templateUrl: 'login.html',
+		controller: 'loginController'
 	})
 	.when('/register', {
-		templateUrl: 'register.html'
+		templateUrl: 'register.html',
+		controller: 'registerController'
 	})
 	.when('/detail', {
-		templateUrl: 'detail.html'
+		templateUrl: 'detail.html',
+		//controller: 'detailController'
 	})
 	.when('/cart', {
-		templateUrl: 'cart.html'
+		templateUrl: 'cart.html',
+		controller: 'cartController'
 	})
 	.when('/add_cart_success', {
-		templateUrl: 'add_cart_success.html'
+		templateUrl: 'add_cart_success.html',
+		controller: 'add_cart_successController'
 	})
 	.when('/thank', {
-		templateUrl: 'thank.html'
-	});
-});
+		templateUrl: 'thank.html',
+		controller: 'thankController'
+	})
+	.otherwise({
+        redirectTo: '/home/0'
+    });
+}]);
 
-myApp.controller('bookonline', function($scope){
-	$scope.abc = function(){
-		alert("abc");
+app.controller('homeController', function($scope, $routeParams){
+	//load ds the loai
+	var dstype = [{'id': '1', 'name': 'Thiếu nhi'}, 
+				{'id': '2', 'name': 'Văn học'}, 
+				{'id': '3', 'name': 'Lịch sử'}, 
+				{'id': '4', 'name': 'Khoa học'}];
+	$scope.types = dstype;
+	if ($routeParams.type == 1){
+		var ds = [{'id': '1', 'name': 'The loai 1', 'author': 'nakun', 'cost': '10000'}, 
+				{'id': '2', 'name': 'The loai 1', 'author': 'nakun', 'cost': '10000'}];
+		$scope.dsbook = ds;
+	}
+	$scope.login = function(){
 		window.location = "#/login";
 	}
+	$scope.register = function(){
+		window.location = "#/register";
+	}
+	$scope.findName = function(){
+		//tim kiem theo ten
+		var search_key = $('#search_key').val();
+		alert(search_key);
+		//search................
+	}
+});
+
+app.controller('loginController', function($scope){
+
 });
