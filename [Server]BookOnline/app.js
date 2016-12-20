@@ -11,6 +11,10 @@ var getAllGerne = require('./routes/GetAllGerne');
 var addNewGerne = require('./routes/AddNewGerne');
 var deleteGerne = require('./routes/DeleteGerne');
 var updateGerne = require('./routes/UpdateGerne');
+var getBookByGerne = require('./routes/GetBookByGerne');
+var addNewBook = require('./routes/AddNewBook');
+var deleteBook = require('./routes/DeleteBook');
+var updateBook = require('./routes/UpdateBook');
 
 var app = express();
 
@@ -32,6 +36,10 @@ app.use('/gernes/all',getAllGerne);
 app.use('/gernes/new', addNewGerne);
 app.use('/gernes/delete', deleteGerne);
 app.use('/gernes/update', updateGerne);
+app.use('/books/gerne', getBookByGerne);
+app.use('/books/new', addNewBook);
+app.use('/books/delete', deleteBook);
+app.use('/books/update', updateBook);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
