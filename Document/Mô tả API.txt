@@ -17,4 +17,39 @@
 	URL: http://locahost:3000/gernes/delete
 	Input: 
 		IdTheLoai: value
+5. API Get sách theo thể loại:
+	Method: GET
+	URL: http://localhost:3000/books/gerne
+6. API Add sách mới:
+	Method: POST
+	URL: http://localhost:3000/books/new
+	Input:
+		TenSach: value
+		SoLuongConLai: value
+		TacGia: value
+		Gia: value
+		NgonNgu: value
+		SoTrang: value
+		AnhBia: value
+		NXB: value
+		IdTheLoai: value
+7. API Delete sách:
+	Method: DELETE
+	URL: http://localhost:3000/books/delete
+	Input:
+		IdSach: value
+8. API Update thông tin sách:
+	Method: UPDATE
+	URL: http://localhost:3000/books/update
+	Input:
+		IdSach: value
+		TenSach: value
+		SoLuongConLai: value
+		TacGia: value
+		Gia: value
+		NgonNgu: value
+		SoTrang: value
+		AnhBia: value
+		NXB: value
+		IdTheLoai: value
 
