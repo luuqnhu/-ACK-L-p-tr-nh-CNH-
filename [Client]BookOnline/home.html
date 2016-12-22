@@ -36,7 +36,7 @@
 					<input type="text" name="" id="search_key" class="form-control" value="" required="required" pattern="" title="" placeholder="Nhập từ khóa tìm kiếm.....">
 				</div>
 				<div class="col-md-2">
-					<button id="keyname" type="button" class="btn btn-default" ng-click="findName()">Tìm kiếm</button>
+					<button type="button" class="btn btn-default" ng-click="findName()">Tìm kiếm</button>
 				</div>
 			</div>
 
@@ -47,6 +47,15 @@
 					<h5>Tên sách: {{book.name}}</h5>
 					<h5>Tác giả: {{book.author}}</h5>
 					<h5>Giá: {{book.cost}}</h5>
+				</div>
+			</div>
+
+			<!-- paging -->
+			<div class="row">
+				<div class="col-md-1 col-md-offset-9">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true" ng-click="previouspage(page)"></span>
+					<span>{{page}}</span>
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ng-click="nextpage(page)"></span>
 				</div>
 			</div>
 		</div><!-- end noi dung hien thi -->
