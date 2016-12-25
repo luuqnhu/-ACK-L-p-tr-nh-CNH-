@@ -42,16 +42,6 @@ app.controller('homeController', function($scope, $routeParams){
 				{'id': '3', 'name': 'Lịch sử'}, 
 				{'id': '4', 'name': 'Khoa học'}];
 	$scope.types = dstype;
-	//get danh sach sach - neu type = 0 -> ds book new - neu # 0 -> ds theo type
-	if ($routeParams.type == 1){
-		var ds = [{'id': '1', 'name': 'The loai 1', 'author': 'nakun', 'cost': '10000'}, 
-				{'id': '2', 'name': 'The loai 1', 'author': 'nakun', 'cost': '10000'}];
-		$scope.dsbook = ds;
-	}
-
-	$scope.maxpage = 1;
-	//page
-	$.cookie("page", 1);
 
 	//login
 	$scope.login = function(){
@@ -70,31 +60,63 @@ app.controller('homeController', function($scope, $routeParams){
 		alert(search_key);
 		//search................
 	}
-
+	//page
+	var mpage = 1;
+	
 	$scope.nextpage = function($page){
 		//page max
-		var $pagemax = 2;
+		var pagemax = 2;
 
-		if ($page == $pagemax){
-			$.cookie("page", $pagemax);
+		if ($page == pagemax){
+			mpage = pagemax;
 		}
-		if ($page < $pagemax){
-			$.cookie("page", 2);
+		if ($page < pagemax){
+			mpage = parseInt($page) + 1;
 		}
+		$.cookie("page", mpage);
 		$scope.page = $.cookie("page");
+		//show ds sach......................
+		var ds = [{'id': '1', 'name': 'Paging next', 'author': 'nakun', 'cost': '10000'}, 
+				{'id': '2', 'name': 'Paging next', 'author': 'nakun', 'cost': '10000'}];
+		$scope.dsbook = ds;
 	}
 
 	$scope.previouspage = function($page){
 		if ($page == 1){
-			$.cookie("page", 1);
+			mpage = 1;
 		}
 		if ($page > 1){
-			$.cookie("page", $page - 1);
+			mpage = parseInt($page) - 1;
 		}
+		$.cookie("page", mpage);
+		$scope.page = $.cookie("page");
+		//show ds sach
+		var ds = [{'id': '1', 'name': 'Paging previous', 'author': 'nakun', 'cost': '10000'}, 
+				{'id': '2', 'name': 'Paging previous', 'author': 'nakun', 'cost': '10000'}];
+		$scope.dsbook = ds;
+	}
+
+	//neu co cookie page thi show theo page
+	//neu khong co cookie theo page thi show trang 1
+	if ($.cookie("page")){
+		$scope.page = $.cookie("page");
+		//show ds the cookie
+		//.................................
+		if ($routeParams.type == 1){
+			var ds = [{'id': '1', 'name': 'Paging init 1', 'author': 'nakun', 'cost': '10000'}, 
+				{'id': '2', 'name': 'Paging init 1', 'author': 'nakun', 'cost': '10000'}];
+			$scope.dsbook = ds;
+		}
+		if ($routeParams.type == 2){
+			var ds = [{'id': '1', 'name': 'Paging init 2', 'author': 'nakun', 'cost': '10000'}, 
+				{'id': '2', 'name': 'Paging init 2', 'author': 'nakun', 'cost': '10000'}];
+			$scope.dsbook = ds;
+		}
+	}else{
+		$.cookie("page", mpage);
 		$scope.page = $.cookie("page");
 	}
 
-	$scope.page = $.cookie("page");
 });
 
 app.controller('loginController', function($scope){
