@@ -15,6 +15,14 @@ var getBookByGerne = require('./routes/GetBookByGerne');
 var addNewBook = require('./routes/AddNewBook');
 var deleteBook = require('./routes/DeleteBook');
 var updateBook = require('./routes/UpdateBook');
+var addNewOrder = require('./routes/AddNewOrder');
+var updateTongGia = require('./routes/UpdateTongGia');
+var updateTrangThai = require('./routes/UpdateTrangThai');
+var addNewOrderDetail = require('./routes/AddNewOrderDetail');
+var getBookByName = require('./routes/GetBookByName');
+var getBookByAuthor = require('./routes/GetBookByAuthor');
+var getBookByPrice = require('./routes/GetBookByPrice');
+var getBookByLanguage = require('./routes/GetBookByLanguage');
 
 var app = express();
 
@@ -40,6 +48,14 @@ app.use('/books/gerne', getBookByGerne);
 app.use('/books/new', addNewBook);
 app.use('/books/delete', deleteBook);
 app.use('/books/update', updateBook);
+app.use('/orders/new', addNewOrder);
+app.use('/orders/updateSum', updateTongGia);
+app.use('/orders/updateState', updateTrangThai);
+app.use('/orderdetails/new', addNewOrderDetail);
+app.use('/books/name', getBookByName);
+app.use('/books/author', getBookByAuthor);
+app.use('/books/price', getBookByPrice);
+app.use('/books/language', getBookByLanguage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
