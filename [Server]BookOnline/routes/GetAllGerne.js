@@ -24,7 +24,7 @@ function handle_database(req,res) {
 
         console.log('connected as id ' + connection.threadId);
 
-        connection.query("SELECT TenTheLoai FROM theloai",function(err,rows){
+        connection.query("SELECT IdTheLoai, TenTheLoai FROM theloai",function(err,rows){
             connection.release();
             if(!err) {
                 //setValue(rows);

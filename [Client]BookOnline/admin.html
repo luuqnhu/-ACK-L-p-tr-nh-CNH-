@@ -43,43 +43,7 @@
 
 		<!-- noi dung hien thi -->
 		<div class="col-md-8" id="content">
-			<!-- tim kiem -->
-			<div class="row" style="margin-top: 5px;">
-				<div class="col-md-3">
-					<select class="form-control" id="loaitimkiem">
-						<option value="1">Tên</option>
-  						<option value="2">Tác giả</option>
-  						<option value="3">Giá</option>
-  						<option value="4">Ngôn ngữ</option>
-					</select>
-				</div>
-				<div class="col-md-7">
-					<input type="text" name="" id="search_key" class="form-control" value="" required="required" pattern="" title="" placeholder="Nhập từ khóa tìm kiếm.....">
-				</div>
-				<div class="col-md-2">
-					<button type="button" class="btn btn-default" ng-click="findName()">Tìm kiếm</button>
-				</div>
-			</div>
-
-			<!-- danh sach sach hien thi -->
-			<div style="margin-top: 10px;" ng-repeat="book in dsbook" id="listbook">
-				<div style="border: 1px solid #1976D2; width: 250px; float: left;">
-					<img src="image/gia_dinh_ngo.png" alt="" style="background-color: #1976D2; height: 200px; width: 150px;">
-					<h5>Tên sách: {{book.TenSach}}</h5>
-					<h5>Tác giả: {{book.TacGia}}</h5>
-					<h5>Giá: {{book.Gia}}</h5>
-					<button type="button" class="btn btn-default" ng-click="chitietsach($event)" itensach="{{book.TenSach}}" itacgia="{{book.TacGia}}" igia="{{book.Gia}}" ingonngu="{{book.NgonNgu}}" isotrang="{{book.SoTrang}}" inxb="{{book.NXB}}">Chi tiết</button>
-				</div>
-			</div>
-
-			<!-- paging
-			<div class="row">
-				<div class="col-md-1 col-md-offset-9">
-					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true" ng-click="previouspage(page)"></span>
-					<span>{{page}}</span>
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" ng-click="nextpage(page)"></span>
-				</div>
-			</div> -->
+			<h1>1. Thêm </h1>
 		</div><!-- end noi dung hien thi -->
 	</div>
 	

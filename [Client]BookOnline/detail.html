@@ -23,13 +23,9 @@
 		<!-- menu -->
 		<div class="col-md-2 col-md-offset-1" id="menu">
 			<h3>Thể loại sách</h3>
-			<ul>
-				<li><a href="#">Thể loại 1</a></li>
-				<li>Thể loại 2</li>
-				<li>Thể loại 3</li>
-				<li>Thể loại 4</li>
-				<li>Thể loại 5</li>
-			</ul>	
+			<ul ng-repeat="type in types">
+				<li><a href="#/home/{{type.IdTheLoai}}">{{type.TenTheLoai}}</a></li>
+			</ul>
 		</div><!-- end menu -->
 
 		<!-- noi dung hien thi -->
@@ -40,7 +36,7 @@
 					<input type="text" name="" id="search_key" class="form-control" value="" required="required" pattern="" title="" placeholder="Nhập từ khóa tìm kiếm.....">
 				</div>
 				<div class="col-md-2">
-					<button type="button" class="btn btn-default">Tìm kiếm</button>
+					<button type="button" class="btn btn-default" ng-click="findName()">Tìm kiếm</button>
 				</div>
 			</div>
 
@@ -48,60 +44,31 @@
 			<div style="margin-top: 10px;">	
 				<div class="row">
 					<div class="col-md-3">
-						<img src="`" alt="" style="background-color: #d35400; height: 200px; width: 150px;">
+						<img src="" alt="" style="background-color: #d35400; height: 200px; width: 150px;">
 					</div>
 					<div class="col-md-9">
-						<h5>Tên sách: </h5>
-						<h5>Tác giả: </h5>
-						<h5>Năm sáng tác: </h5>
-						<h5>Giá: </h5>
-						<h5>Mô tả: </h5>
+						<h5>Tên sách: {{tensach}}</h5>
+						<h5>Tác giả: {{tacgia}} </h5>
+						<h5>Giá: {{gia}} </h5>
+						<h5>Ngôn ngữ: {{ngonngu}} </h5>
+						<h5>Số trang: {{sotrang}} </h5>
+						<h5>Nhà xuất bản: {{nxb}} </h5>
 					</div>
 				</div>
 				<button type="button" class="btn btn-default">Thêm vào giỏ hàng</button>
 				<h3>Bình luận hàng đầu</h3>
 				<div class="row">
 					<div class="col-md-10">
-						<textarea name="" id="input" class="form-control" rows="3" required="required"></textarea>
+						<textarea name="" id="ndbinhluan" class="form-control" rows="3"></textarea>
 					</div>
 					<div class="col-md-2">
-						<button type="button" class="btn btn-default">Đăng</button>
+						<button type="button" class="btn btn-default" ng-click="binhluan()">Đăng</button>
 					</div>
 				</div>
-				<div style="margin-top: 10px;">
+				<div id="listbinhluan" style="margin-top: 10px;" ng-repeat="binhluan in dsbinhluan">
 					<div class="row comment">
 						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
-					</div>
-
-					<div class="row comment">
-						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
-					</div>
-
-					<div class="row comment">
-						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
-					</div>
-
-					<div class="row comment">
-						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
-					</div>
-
-					<div class="row comment">
-						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
-					</div>
-
-					<div class="row comment">
-						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
-					</div>
-					
-					<div class="row comment">
-						<span>Tên người bình luận</span>
-						<p>Nôi dung bình luận....</p>
+						<p>{{binhluan.content}}</p>
 					</div>
 				</div>
 			</div>

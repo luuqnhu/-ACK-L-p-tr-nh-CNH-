@@ -90,6 +90,21 @@ a:active, a:visited{
 	border-bottom-left-radius: 5px;
 	height: 300px;
 }
+
+#formregister{
+	padding-top: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	margin-top: 50px;
+	background-color: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	height: 500px;
+}
+
 .glass{
     background-image: url('../image/bookbackground.jpg');
     height: 700px;
@@ -98,3 +113,4 @@ a:active, a:visited{
 #book{
 	margin-top: 150px;
 }
+

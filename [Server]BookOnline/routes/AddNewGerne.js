@@ -33,7 +33,7 @@ function handle_database(req,res) {
                 res.json(rows);
             }
         });
-        //console.log(req.body.TenTheLoai);
+        console.log(req.body.TenTheLoai);
 
         connection.on('error', function(err) {
             res.json({"code" : 100, "status" : "Error in connection database"});
