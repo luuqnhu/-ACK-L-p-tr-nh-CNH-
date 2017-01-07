@@ -6,7 +6,9 @@ var myParser = require("body-parser");
 var router = express();
 var jsonParser = myParser.json();
 var pool = require('../db');
+var verify = require('./VerifyToken');
 
+//them sach
 function add_book(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -34,6 +36,7 @@ function add_book(req,res) {
     });
 }
 
+//cap nhat thong tin sach
 function update_book(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -63,6 +66,7 @@ function update_book(req,res) {
     });
 }
 
+//xoa sach
 function delete_book(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -88,6 +92,7 @@ function delete_book(req,res) {
     });
 }
 
+//lay sach theo ten tac gia
 function get_by_author(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -113,6 +118,7 @@ function get_by_author(req,res) {
     });
 }
 
+//lay sach theo the loai
 function get_by_gerne(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -138,6 +144,7 @@ function get_by_gerne(req,res) {
     });
 }
 
+//lay sach theo ngon ngu
 function get_by_language(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -163,6 +170,7 @@ function get_by_language(req,res) {
     });
 }
 
+//lay sach theo ten sach
 function get_by_name(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -188,6 +196,7 @@ function get_by_name(req,res) {
     });
 }
 
+//lay sach theo gia
 function get_by_price(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -213,15 +222,19 @@ function get_by_price(req,res) {
     });
 }
 
-router.post("/new",jsonParser, function(req,res){
+router.use("/api", function(req, res, next){
+   verify.verifyToken(req, res, next);
+});
+
+router.post("/api/new",jsonParser, function(req,res){
     add_book(req,res);
 });
 
-router.put("/update",jsonParser, function(req,res){
+router.put("/api/update",jsonParser, function(req,res){
     update_book(req,res);
 });
 
-router.delete("/delete",jsonParser, function(req,res){
+router.delete("/api/delete",jsonParser, function(req,res){
     delete_book(req,res);
 });
 

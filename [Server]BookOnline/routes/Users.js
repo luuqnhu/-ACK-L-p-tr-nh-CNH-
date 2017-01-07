@@ -6,7 +6,7 @@ var jwt    = require('jsonwebtoken');
 var pool = require('../db');
 var config  = require('../config');
 var _       = require('lodash');
-var apiRoutes = express.Router();
+var verify = require('./VerifyToken');
 
 //create token
 function createToken(user) {
@@ -16,34 +16,34 @@ function createToken(user) {
 //create
 function add_user(req,res) {
     pool.getConnection(function(err,connection){
-        if (err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-        }
-
-        console.log('connected as id ' + connection.threadId);
-
-        if (!req.body.Username || !req.body.Password) {
-            return res.json({success:false, message:'You must send the username and the password'});
-        }
-        getUserDB(req.body.Username, function(user){
-            if(!user){
-                var post  = {Username: req.body.Username, Password: req.body.Password, Fullname: req.body.Fullname,
-                    Email:req.body.Email, Phone:req.body.Phone, Level: "normal"};
-                connection.query("insert into users set ?",post,function(err,rows){
-                    connection.release();
-                    if(!err) {
-                        res.json(rows);
-                    }
-                });
+            if (err) {
+                res.json({"code" : 100, "status" : "Error in connection database"});
+                return;
             }
-            else res.json({success:false, message:'A user with that username already exists'});
-        });
 
-        connection.on('error', function(err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-        });
+            console.log('connected as id ' + connection.threadId);
+
+            if (!req.body.Username || !req.body.Password) {
+                return res.json({success:false, message:'You must send the username and the password'});
+            }
+            getUserDB(req.body.Username, function(user){
+                if(!user){
+                    var post  = {Username: req.body.Username, Password: req.body.Password, Fullname: req.body.Fullname,
+                        Email:req.body.Email, Phone:req.body.Phone, Level: "normal"};
+                    connection.query("insert into users set ?",post,function(err,rows){
+                        connection.release();
+                        if(!err) {
+                            res.json(rows);
+                        }
+                    });
+                }
+                else res.json({success:false, message:'A user with that username already exists'});
+            });
+
+            connection.on('error', function(err) {
+                res.json({"code" : 100, "status" : "Error in connection database"});
+                return;
+            });
     });
 }
 
@@ -100,34 +100,6 @@ function login_authenticate(req, res){
         }
 
     });
-}
-
-//verify token
-function verifyToken(req, res, next) {
-    // check header or url parameters or post parameters for token
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    // decode token
-    if (token) {
-        // verifies secret and checks exp
-        jwt.verify(token, config.secretKey, function (err, decoded) {
-            if (err) {
-                return res.json({success: false, message: 'Failed to authenticate token.'});
-            } else {
-                // if everything is good, save to request for use in other routes
-                req.decoded = decoded;
-                next();
-            }
-        });
-
-    } else {
-
-        // if there is no token
-        // return an error
-        return res.status(403).send({
-            success: false,
-            message: 'No token provided.'
-        });
-    }
 }
 
 //get all user
@@ -219,13 +191,13 @@ function delete_user(req,res) {
 
         console.log('connected as id ' + connection.threadId);
 
+        console.log(req.body.IdUser);
         connection.query("delete from users where IdUser = ? ",req.body.IdUser,function(err,rows){
             connection.release();
             if(!err) {
                 res.json(rows);
             }
         });
-        //console.log(req.body.TenTheLoai);
 
         connection.on('error', function(err) {
             res.json({"code" : 100, "status" : "Error in connection database"});
@@ -235,7 +207,7 @@ function delete_user(req,res) {
 }
 
 router.use("/api", function(req, res, next){
-    verifyToken(req, res, next);
+    verify.verifyToken(req, res, next);
 });
 
 router.get("/api/get/all",function(req,res){
