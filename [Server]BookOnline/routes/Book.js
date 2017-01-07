@@ -7,10 +7,10 @@ var router = express();
 var jsonParser = myParser.json();
 var pool = require('../db');
 var verify = require('./VerifyToken');
+var admin = false;
 
 //them sach
 function add_book(req,res) {
-
     pool.getConnection(function(err,connection){
         if (err) {
             res.json({"code" : 100, "status" : "Error in connection database"});
@@ -223,19 +223,29 @@ function get_by_price(req,res) {
 }
 
 router.use("/api", function(req, res, next){
-   verify.verifyToken(req, res, next);
+    verify.verifyToken(req, res, next);
+    admin = verify.verifyAdmin(req, res);
 });
 
 router.post("/api/new",jsonParser, function(req,res){
-    add_book(req,res);
+    if(admin)
+        add_book(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
 router.put("/api/update",jsonParser, function(req,res){
-    update_book(req,res);
+    if(admin)
+        update_book(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
 router.delete("/api/delete",jsonParser, function(req,res){
-    delete_book(req,res);
+    if(admin)
+        delete_book(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
 router.get("/get/author/:TacGia",function(req,res){

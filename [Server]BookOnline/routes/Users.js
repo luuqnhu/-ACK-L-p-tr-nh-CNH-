@@ -7,6 +7,7 @@ var pool = require('../db');
 var config  = require('../config');
 var _       = require('lodash');
 var verify = require('./VerifyToken');
+var admin = false;
 
 //create token
 function createToken(user) {
@@ -208,10 +209,14 @@ function delete_user(req,res) {
 
 router.use("/api", function(req, res, next){
     verify.verifyToken(req, res, next);
+    admin = verify.verifyAdmin(req, res);
 });
 
-router.get("/api/get/all",function(req,res){
-    get_all_users(req,res);
+router.get("/get/all",function(req,res){
+    if(admin)
+        get_all_users(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
 router.get("/api/get/detail/:Username",function(req,res){
@@ -223,7 +228,10 @@ router.put("/api/update",jsonParser, function(req,res){
 });
 
 router.delete("/api/delete",jsonParser, function(req,res){
-    delete_user(req,res);
+    if(admin)
+        delete_user(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
 router.post("/create",jsonParser, function(req,res){

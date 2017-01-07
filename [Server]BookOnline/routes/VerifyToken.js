@@ -1,35 +1,10 @@
 /**
  * Created by Luu Nhu on 01/07/2017.
  */
-var express = require('express');
-var myParser = require("body-parser");
-var router = express();
-var jsonParser = myParser.json();
 var jwt    = require('jsonwebtoken');
-var pool = require('../db');
 var config  = require('../config');
+var jwtDecode = require('jwt-decode');
 var _       = require('lodash');
-
-function getUserDB(Username, done) {
-    pool.getConnection(function(err,connection){
-        if (err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-        }
-
-        console.log('connected as id ' + connection.threadId);
-
-        connection.query('SELECT * FROM users WHERE Username = ? LIMIT 1', [Username], function(err, rows, fields) {
-            if (err) throw err;
-            done(rows[0]);
-        });
-
-        connection.on('error', function(err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-        });
-    });
-}
 
 module.exports = {
     verifyToken: function verifyToken(req, res, next) {
@@ -47,7 +22,6 @@ module.exports = {
                     next();
                 }
             });
-
         } else {
 
             // if there is no token
@@ -57,6 +31,12 @@ module.exports = {
                 message: 'No token provided.'
             });
         }
+    },
+    verifyAdmin: function verifyAdmin(req, res){
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+        var decoded = jwtDecode(token);
+        if(decoded.Level === "admin")
+            return true;
+        return false;
     }
 };
-
