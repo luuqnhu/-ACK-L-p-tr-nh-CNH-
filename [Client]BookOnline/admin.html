@@ -43,7 +43,144 @@
 
 		<!-- noi dung hien thi -->
 		<div class="col-md-8" id="content">
-			<h1>1. Thêm </h1>
+			<div class="panel-group" id="accordion">
+				<!-- Tab 1 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="route#collapse1" style="color: blue;">
+								Thêm sách mới</a>
+						</h4>
+					</div>
+					<div id="collapse1" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<label for="">Tên sách</label>
+							<input type="text" id="tab1tensach" class="form-control" placeholder="Nhập tên sách...">
+							<label for="">Số lượng</label>
+							<input type="text" id="tab1soluong" class="form-control" placeholder="Nhập số lượng sách...">
+							<label for="">Tác giả</label>
+							<input type="text" id="tab1tacgia" class="form-control" placeholder="Nhập tác giả sách...">
+							<label for="">Giá</label>
+							<input type="text" id="tab1gia" class="form-control" placeholder="Nhập giá sách...">
+							<label for="">Ngôn ngữ</label>
+							<input type="text" id="tab1ngonngu" class="form-control" placeholder="Nhập ngôn ngữ sách...">
+							<label for="">Số trang</label>
+							<input type="text" id="tab1sotrang" class="form-control" placeholder="Nhập số trang sách...">
+							<label for="">Ảnh bìa</label>
+							<input type="text" id="tab1anhbia" class="form-control" placeholder="Nhập đường dãn ảnh bìa sách...">
+							<label for="">Nhà xuất bản</label>
+							<input type="text" id="tab1nxb" class="form-control" placeholder="Nhập nhà xuất bản sách...">
+							<label for="">Thể loại</label>
+							<select id="tab1theloai" class="form-control">
+								<option ng-repeat="type in types" value="{{type.IdTheLoai}}">{{type.TenTheLoai}}</option>
+							</select>
+							<button type="button" class="btn btn-default" ng-click="adminthemsach()">Thêm sách</button>
+						</div>
+					</div>
+				</div>
+				<!-- Tab 2 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="route#collapse2" style="color: blue;">
+									Update sách</a>
+						</h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse">
+						<div class="panel-body">
+							<label for="">ID sách</label>
+							<input type="text" id="tab2idsach" class="form-control" placeholder="Nhập ID sách cập nhật...">
+							<label for="">Tên sách</label>
+							<input type="text" id="tab2tensach" class="form-control" placeholder="Nhập tên sách...">
+							<label for="">Số lượng</label>
+							<input type="text" id="tab2soluong" class="form-control" placeholder="Nhập số lượng sách...">
+							<label for="">Tác giả</label>
+							<input type="text" id="tab2tacgia" class="form-control" placeholder="Nhập tác giả sách...">
+							<label for="">Giá</label>
+							<input type="text" id="tab2gia" class="form-control" placeholder="Nhập giá sách...">
+							<label for="">Ngôn ngữ</label>
+							<input type="text" id="tab2ngonngu" class="form-control" placeholder="Nhập ngôn ngữ sách...">
+							<label for="">Số trang</label>
+							<input type="text" id="tab2sotrang" class="form-control" placeholder="Nhập số trang sách...">
+							<label for="">Ảnh bìa</label>
+							<input type="text" id="tab2anhbia" class="form-control" placeholder="Nhập đường dãn ảnh bìa sách...">
+							<label for="">Nhà xuất bản</label>
+							<input type="text" id="tab2nxb" class="form-control" placeholder="Nhập nhà xuất bản sách...">
+							<label for="">Thể loại</label>
+							<select id="tab2theloai" class="form-control">
+								<option ng-repeat="type in types" value="{{type.IdTheLoai}}">{{type.TenTheLoai}}</option>
+							</select>
+							<button type="button" class="btn btn-default" ng-click="admincapnhatsach()">Cập nhật</button>
+						</div>
+					</div>
+				</div>
+				<!-- Tab 3 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="route#collapse3" style="color: blue;">
+									Delete sách</a>
+						</h4>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse">
+						<div class="panel-body">
+							<label for="">ID sách</label>
+							<input type="text" id="tab3idsach" class="form-control" placeholder="Nhập ID sách cần xóa...">
+							<button type="button" class="btn btn-default" ng-click="adminxoasach()">Xóa</button>
+						</div>
+					</div>
+				</div>
+				<!-- Tab 4 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="route#collapse4" style="color: blue;">
+									Thêm thể loại</a>
+						</h4>
+					</div>
+					<div id="collapse4" class="panel-collapse collapse">
+						<div class="panel-body">
+							<label for="tab4tentheloai">Tên thể loại</label>
+							<input type="text" id="tab4tentheloai" class="form-control" placeholder="Nhập tên thể loại...">
+							<button type="button" class="btn btn-default" ng-click="adminthemtheloai()">Thêm</button>
+						</div>
+					</div>
+				</div>
+				<!-- Tab 5 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="route#collapse5" style="color: blue;">
+									Update thể loại</a>
+						</h4>
+					</div>
+					<div id="collapse5" class="panel-collapse collapse">
+						<div class="panel-body">
+							<label for="tab5idtheloai">ID thể loại</label>
+							<input type="text" id="tab5idtheloai" class="form-control" placeholder="Nhập ID thể loại...">
+							<label for="tab5tentheloai">Tên thể loại</label>
+							<input type="text" id="tab5tentheloai" class="form-control" placeholder="Nhập tên thể loại...">
+							<button type="button" class="btn btn-default" ng-click="admincapnhattheloai()">Cập nhật</button>
+						</div>
+					</div>
+				</div>
+				<!-- Tab 6 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="route#collapse6" style="color: blue;">
+									Delete thể loại</a>
+						</h4>
+					</div>
+					<div id="collapse6" class="panel-collapse collapse">
+						<div class="panel-body">
+							<label for="tab6idtheloai">ID thể loại</label>
+							<input type="text" id="tab6idtheloai" class="form-control" placeholder="Nhập ID thể loại...">
+							<button type="button" class="btn btn-default" ng-click="adminxoatheloai()">Xóa</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div><!-- end noi dung hien thi -->
 	</div>
 	

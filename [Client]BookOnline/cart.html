@@ -1,1 +1,87 @@
-Cart page
+<div class="container-fluid">
+	<!-- header -->
+	<div class="row">
+		<div class="col-md-12" id="header_header"></div>
+	</div>
+	<div class="row" style="color: white">
+		<div class="col-md-12" id="header">
+			<a href="#/home" style="float: left"><img src="image/logo.png" alt="Image" height="100" width="100"></a>
+			<h3 style="margin-left:10px; margin-top: 40px; float: left">Book Online</h3>
+		</div>
+	</div>
+	<div class="row" ng-if="!checkdn">
+		<div class="col-md-12" id="login_information">
+			<div style="float: right; margin-top: 5px;">
+				<button type="button" class="btn btn-default" style="width: 100px;" ng-click="login()">Login</button>
+				<button type="button" class="btn btn-default" style="width: 100px;" ng-click="register()">Register</button>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="checkdn">
+		<div class="col-md-12" id="login_information">
+			<div style="float: right; margin-top: 5px;">
+				<div class="dropdown">
+  					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{checkdn.username}}
+  					<span class="caret"></span></button>
+  					<ul class="dropdown-menu">
+    					<li><button type="button" class="btn btn-default" ng-click="dangxuat()">Đăng xuất</button></li>
+  					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+
+	<div class="row">
+		<!-- menu -->
+		<div class="col-md-2 col-md-offset-1" id="menu">
+			<h3>Thể loại sách</h3>
+			<ul ng-repeat="type in types">
+				<li><a href="#/home/{{type.IdTheLoai}}">{{type.TenTheLoai}}</a></li>
+			</ul>	
+		</div><!-- end menu -->
+
+		<!-- noi dung hien thi -->
+		<div class="col-md-8" id="content">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID book</th>
+						<th>Tên sách</th>
+						<th>Giá</th>
+						<th>Số lượng</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat="cart in carts">
+					<tr>
+						<td>{{cart.idsach}}</td>
+						<td>{{cart.tensach}}</td>
+						<td>{{cart.gia}}</td>
+						<td>{{cart.soluong}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<h5>Tổng tiền: {{tongtien}}</h5>
+			<label for="diachi">Nhập địa chỉ nhận</label>
+			<textarea id="diachi" class="form-control" rows="3"></textarea>
+			<label for="sdt">SDT nhận</label>
+			<input type="text" id="sdt" class="form-control">
+			<button type="button" class="btn btn-default" ng-click="dathang()">Đặt hàng</button>
+		</div><!-- end noi dung hien thi -->
+	</div>
+	
+	<!-- footer -->
+	<div class="row">
+		<div class="col-md-12" id="footer_header"></div>
+	</div>
+	<div class="row">	
+		<div class="col-md-12" id="footer">
+			<center>
+				<h5>Nhóm phát triển:</h5>
+				<h5>1312406 - Trần Minh Nhí</h5>
+				<h5>1312408 - Lưu Hồng Ngọc Quỳnh Như</h5>
+			</center>
+		</div>
+	</div>
+	<<!-- end footer -->
+</div>

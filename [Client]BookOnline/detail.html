@@ -1,19 +1,33 @@
 <div class="container-fluid">
 	<!-- header -->
+	<!-- header -->
 	<div class="row">
 		<div class="col-md-12" id="header_header"></div>
 	</div>
 	<div class="row" style="color: white">
 		<div class="col-md-12" id="header">
-			<a href="#/" style="float: left"><img src="image/logo.png" alt="Image" height="100" width="100"></a>
+			<a href="#/home" style="float: left"><img src="image/logo.png" alt="Image" height="100" width="100"></a>
 			<h3 style="margin-left:10px; margin-top: 40px; float: left">Book Online</h3>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" ng-if="!checkdn">
 		<div class="col-md-12" id="login_information">
 			<div style="float: right; margin-top: 5px;">
-				<button type="button" class="btn btn-default" style="width: 100px;">Login</button>
-				<button type="button" class="btn btn-default" style="width: 100px;">Register</button>
+				<button type="button" class="btn btn-default" style="width: 100px;" ng-click="login()">Login</button>
+				<button type="button" class="btn btn-default" style="width: 100px;" ng-click="register()">Register</button>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="checkdn">
+		<div class="col-md-12" id="login_information">
+			<div style="float: right; margin-top: 5px;">
+				<div class="dropdown">
+  					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{checkdn.username}}
+  					<span class="caret"></span></button>
+  					<ul class="dropdown-menu">
+    					<li><button type="button" class="btn btn-default" ng-click="dangxuat()">Đăng xuất</button></li>
+  					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -54,8 +68,12 @@
 						<h5>Số trang: {{sotrang}} </h5>
 						<h5>Nhà xuất bản: {{nxb}} </h5>
 					</div>
+					<div class="form-group">
+  						<label for="soluong">Nhập số lượng:</label>
+  						<input type="text" class="form-control" id="soluong" style="width: 150px;">
+					</div>
 				</div>
-				<button type="button" class="btn btn-default">Thêm vào giỏ hàng</button>
+				<button type="button" class="btn btn-default" ng-click="addcart()">Thêm vào giỏ hàng</button>
 				<h3>Bình luận hàng đầu</h3>
 				<div class="row">
 					<div class="col-md-10">

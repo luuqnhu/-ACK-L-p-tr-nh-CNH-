@@ -24,7 +24,7 @@
   					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{checkdn.username}}
   					<span class="caret"></span></button>
   					<ul class="dropdown-menu">
-    					<li><<button type="button" class="btn btn-default" ng-click="dangxuat()">Button</button></li>
+    					<li><button type="button" class="btn btn-default" ng-click="dangxuat()">Đăng xuất</button></li>
   					</ul>
 				</div>
 			</div>
@@ -68,7 +68,7 @@
 					<h5>Tên sách: {{book.TenSach}}</h5>
 					<h5>Tác giả: {{book.TacGia}}</h5>
 					<h5>Giá: {{book.Gia}}</h5>
-					<button type="button" class="btn btn-default" ng-click="chitietsach($event)" itensach="{{book.TenSach}}" itacgia="{{book.TacGia}}" igia="{{book.Gia}}" ingonngu="{{book.NgonNgu}}" isotrang="{{book.SoTrang}}" inxb="{{book.NXB}}">Chi tiết</button>
+					<button type="button" class="btn btn-default" ng-click="chitietsach($event)" iidsach="{{book.IdSach}}" itensach="{{book.TenSach}}" itacgia="{{book.TacGia}}" igia="{{book.Gia}}" ingonngu="{{book.NgonNgu}}" isotrang="{{book.SoTrang}}" inxb="{{book.NXB}}">Chi tiết</button>
 				</div>
 			</div>
 
