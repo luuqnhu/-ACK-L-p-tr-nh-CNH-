@@ -25,7 +25,7 @@ function add_book(req,res) {
         connection.query("insert into sach set ?",post,function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                res.json({success:true, message:"Added new book!"});
             }
         });
 
@@ -54,7 +54,7 @@ function update_book(req,res) {
         connection.query("update sach set ? where IdSach = ?",[post, req.body.IdSach],function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                res.json({success:true, message:"Updated successfully!"});
             }
         });
         //console.log(req.body.TenTheLoai);
@@ -80,7 +80,7 @@ function delete_book(req,res) {
         connection.query("delete from sach where IdSach = ? ",req.body.IdSach,function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                res.json({success:true, message:"Deleted successfully!"});
             }
         });
         //console.log(req.body.TenTheLoai);
@@ -107,7 +107,10 @@ function get_by_author(req,res) {
             connection.release();
             if(!err) {
                 //setValue(rows);
-                res.json(rows);
+                if(rows.length)
+                    res.json(rows);
+                else
+                    res.json({success:true, message: "Not found any book of this author"});
             }
         });
 
@@ -133,7 +136,10 @@ function get_by_gerne(req,res) {
             connection.release();
             if(!err) {
                 //setValue(rows);
-                res.json(rows);
+                if(rows.length)
+                    res.json(rows);
+                else
+                    res.json({success:true, message: "Not found any book of this gerne"});
             }
         });
 
@@ -159,7 +165,10 @@ function get_by_language(req,res) {
             connection.release();
             if(!err) {
                 //setValue(rows);
-                res.json(rows);
+                if(rows.length)
+                    res.json(rows);
+                else
+                    res.json({success:true, message:"Not found any book of this language"});
             }
         });
 
@@ -185,7 +194,10 @@ function get_by_name(req,res) {
             connection.release();
             if(!err) {
                 //setValue(rows);
-                res.json(rows);
+                if(rows.length)
+                    res.json(rows);
+                else
+                    res.json({success:true, message:"Not found any book like this"});
             }
         });
 
@@ -211,7 +223,10 @@ function get_by_price(req,res) {
             connection.release();
             if(!err) {
                 //setValue(rows);
-                res.json(rows);
+                if(rows.length)
+                    res.json(rows);
+                else
+                    res.json({success:true, message:"Not found any book with this price"});
             }
         });
 
@@ -222,11 +237,13 @@ function get_by_price(req,res) {
     });
 }
 
+//Authentication
 router.use("/api", function(req, res, next){
     verify.verifyToken(req, res, next);
     admin = verify.verifyAdmin(req, res);
 });
 
+//only admin
 router.post("/api/new",jsonParser, function(req,res){
     if(admin)
         add_book(req,res);
@@ -234,6 +251,7 @@ router.post("/api/new",jsonParser, function(req,res){
         res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//only admin
 router.put("/api/update",jsonParser, function(req,res){
     if(admin)
         update_book(req,res);
@@ -241,6 +259,7 @@ router.put("/api/update",jsonParser, function(req,res){
         res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//only admin
 router.delete("/api/delete",jsonParser, function(req,res){
     if(admin)
         delete_book(req,res);
@@ -248,22 +267,27 @@ router.delete("/api/delete",jsonParser, function(req,res){
         res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//public
 router.get("/get/author/:TacGia",function(req,res){
     get_by_author(req,res);
 });
 
+//public
 router.get("/get/gerne/:idTheLoai",function(req,res){
     get_by_gerne(req,res);
 });
 
+//public
 router.get("/get/language/:NgonNgu",function(req,res){
     get_by_language(req,res);
 });
 
+//public
 router.get("/get/name/:TenSach",function(req,res){
     get_by_name(req,res);
 });
 
+//public
 router.get("/get/price/:Gia",function(req,res){
     get_by_price(req,res);
 });

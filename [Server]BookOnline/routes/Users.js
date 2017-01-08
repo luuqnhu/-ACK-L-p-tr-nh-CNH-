@@ -8,6 +8,7 @@ var config  = require('../config');
 var _       = require('lodash');
 var verify = require('./VerifyToken');
 var admin = false;
+var username;
 
 //create token
 function createToken(user) {
@@ -34,7 +35,7 @@ function add_user(req,res) {
                     connection.query("insert into users set ?",post,function(err,rows){
                         connection.release();
                         if(!err) {
-                            res.json(rows);
+                            res.json({success:true, message:"Create account successfully!"});
                         }
                     });
                 }
@@ -170,7 +171,7 @@ function update_user(req,res) {
         connection.query("update users set ? where IdUser = ?",[post, req.body.IdUser],function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                res.json({success:true, message:"Updated successfully!"});
             }
         });
 
@@ -196,7 +197,7 @@ function delete_user(req,res) {
         connection.query("delete from users where IdUser = ? ",req.body.IdUser,function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                res.json({success:true, message:"Deleted successfully!"});
             }
         });
 
@@ -207,26 +208,38 @@ function delete_user(req,res) {
     });
 }
 
+//Authentication
 router.use("/api", function(req, res, next){
     verify.verifyToken(req, res, next);
     admin = verify.verifyAdmin(req, res);
+    username = verify.verifyUser(req, res);
 });
 
-router.get("/get/all",function(req,res){
+//only admin
+router.get("/api/get/all",function(req,res){
     if(admin)
         get_all_users(req,res);
     else
         res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//admin & owner user
 router.get("/api/get/detail/:Username",function(req,res){
-    get_detail_user(req,res);
+    if(admin || username === req.params.Username)
+        get_detail_user(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//admin & owner user
 router.put("/api/update",jsonParser, function(req,res){
-    update_user(req,res);
+    if(admin || username === req.body.Username)
+        update_user(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//only admin
 router.delete("/api/delete",jsonParser, function(req,res){
     if(admin)
         delete_user(req,res);
@@ -234,10 +247,12 @@ router.delete("/api/delete",jsonParser, function(req,res){
         res.json({success:false, message:"You are not allowed to access this site"});
 });
 
+//public
 router.post("/create",jsonParser, function(req,res){
     add_user(req,res);
 });
 
+//public
 router.post("/login", jsonParser, function(req, res){
    login_authenticate(req, res);
 });

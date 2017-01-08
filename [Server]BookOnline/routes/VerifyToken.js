@@ -38,5 +38,10 @@ module.exports = {
         if(decoded.Level === "admin")
             return true;
         return false;
+    },
+    verifyUser: function verifyUser(req, res){
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+        var decoded = jwtDecode(token);
+        return decoded.Username;
     }
 };

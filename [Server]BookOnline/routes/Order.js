@@ -6,7 +6,9 @@ var myParser = require("body-parser");
 var router = express();
 var jsonParser = myParser.json();
 var pool = require('../db');
+var verify = require('./VerifyToken');
 
+//them don hang moi
 function add_order(req,res) {
 
     pool.getConnection(function(err,connection){
@@ -22,7 +24,7 @@ function add_order(req,res) {
         connection.query("insert into donhang set ?",post,function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                res.json({success:true, message:"Added new order"});
             }
         });
         //console.log(req.body.TenTheLoai);
@@ -34,67 +36,119 @@ function add_order(req,res) {
     });
 }
 
+//tim kiem don hang trong danh sach
+function getOrder(IdDonHang, done){
+    pool.getConnection(function(err,connection){
+        if (err) {
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+        }
+
+        console.log('connected as id ' + connection.threadId);
+
+        connection.query('SELECT * FROM donhang WHERE IdDonHang = ? LIMIT 1', [IdDonHang], function(err, rows, fields) {
+            if (err) throw err;
+            done(rows[0]);
+        });
+
+        connection.on('error', function(err) {
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+        });
+    });
+}
+
+//cap nhat tong gia
 function update_sum(req,res) {
 
-    pool.getConnection(function(err,connection){
-        if (err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
+    if (!req.body.IdDonHang || !req.body.TongGia){
+        return res.json({success: false, message: 'You must send IdDonHang and TongGia'});
+    }
+
+    getOrder(req.body.IdDonHang, function(order) {
+        if (!order) {
+            return res.json({success: false, message: 'Updated failed. Not found this data in database.'});
         }
+        else {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    res.json({"code" : 100, "status" : "Error in connection database"});
+                    return;
+                }
 
-        console.log('connected as id ' + connection.threadId);
+                console.log('connected as id ' + connection.threadId);
 
-        var post = {TongGia: req.body.TongGia};
-        connection.query("update donhang set ? where IdDonHang = ?",[post, req.body.IdDonHang],function(err,rows){
-            connection.release();
-            if(!err) {
-                res.json(rows);
-            }
-        });
-        //console.log(req.body.TenTheLoai);
-
-        connection.on('error', function(err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-        });
+                var post = {TongGia: req.body.TongGia};
+                connection.query("update donhang set ? where IdDonHang = ?",[post, req.body.IdDonHang],function(err,rows){
+                    connection.release();
+                    if(!err) {
+                        res.json({success:true, message:"Updated successfully!"});
+                    }
+                });
+                connection.on('error', function(err) {
+                    res.json({"code" : 100, "status" : "Error in connection database"});
+                    return;
+                });
+            });
+        }
     });
 }
 
+//cap nhat trang thai
 function update_state(req,res) {
 
-    pool.getConnection(function(err,connection){
-        if (err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
+    if (!req.body.IdDonHang || !req.body.TrangThai){
+        return res.json({success: false, message: 'You must send IdDonHang and TrangThai'});
+    }
+
+    getOrder(req.body.IdDonHang, function(order) {
+        if (!order) {
+            return res.json({success: false, message: 'Updated failed. Not found this data in database.'});
         }
+        else {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    res.json({"code" : 100, "status" : "Error in connection database"});
+                    return;
+                }
 
-        console.log('connected as id ' + connection.threadId);
+                console.log('connected as id ' + connection.threadId);
 
-        var post = {TrangThai: req.body.TrangThai};
-        connection.query("update donhang set ? where IdDonHang = ?",[post, req.body.IdDonHang],function(err,rows){
-            connection.release();
-            if(!err) {
-                res.json(rows);
-            }
-        });
-        //console.log(req.body.TenTheLoai);
+                var post = {TrangThai: req.body.TrangThai};
+                connection.query("update donhang set ? where IdDonHang = ?",[post, req.body.IdDonHang],function(err,rows){
+                    connection.release();
+                    if(!err) {
+                        res.json({success:true, message:"Updated successfully!"});
+                    }
+                });
+                //console.log(req.body.TenTheLoai);
 
-        connection.on('error', function(err) {
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-        });
+                connection.on('error', function(err) {
+                    res.json({"code" : 100, "status" : "Error in connection database"});
+                    return;
+                });
+            });
+        }
     });
 }
 
-router.post("/new",jsonParser, function(req,res){
+//Authentication
+router.use("/api", function(req, res, next){
+    verify.verifyToken(req, res, next);
+});
+
+//protected
+router.post("/api/new",jsonParser, function(req,res){
     add_order(req,res);
 });
 
-router.put("/update/sum",jsonParser, function(req,res){
+//protected
+router.put("/api/update/sum",jsonParser, function(req,res){
     update_sum(req,res);
 });
 
-router.put("/update/state",jsonParser, function(req,res){
+//protected
+router.put("/api/update/state",jsonParser, function(req,res){
     update_state(req,res);
 });
 
