@@ -7,6 +7,7 @@ var router = express();
 var jsonParser = myParser.json();
 var pool = require('../db');
 var verify = require('./VerifyToken');
+var admin = false;
 
 //them don hang moi
 function add_order(req,res) {
@@ -21,10 +22,10 @@ function add_order(req,res) {
         //console.log(req.body.TenSach);
 
         var post  = {IdUser: req.body.IdUser, TongGia: 0,TrangThai:1};
-        connection.query("insert into donhang set ?",post,function(err,rows){
+        connection.query("insert into donhang set ?",post,function(err, result){
             connection.release();
             if(!err) {
-                res.json({success:true, message:"Added new order"});
+                res.json({success:true, message: "Added new order", IdDonHang: result.insertId});
             }
         });
         //console.log(req.body.TenTheLoai);
@@ -132,9 +133,34 @@ function update_state(req,res) {
     });
 }
 
+//get danh sach don hang theo trang thai xu ly
+function getOrderByState(req, res){
+    pool.getConnection(function(err,connection){
+        if (err) {
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+        }
+
+        console.log('connected as id ' + connection.threadId);
+
+        connection.query('SELECT * FROM donhang WHERE TrangThai = ?', req.params.TrangThai, function(err, rows) {
+            connection.release();
+            if(!err) {
+                res.json(rows);
+            }
+        });
+
+        connection.on('error', function(err) {
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+        });
+    });
+}
+
 //Authentication
 router.use("/api", function(req, res, next){
     verify.verifyToken(req, res, next);
+    admin = verify.verifyAdmin(req, res);
 });
 
 //protected
@@ -150,6 +176,14 @@ router.put("/api/update/sum",jsonParser, function(req,res){
 //protected
 router.put("/api/update/state",jsonParser, function(req,res){
     update_state(req,res);
+});
+
+//only admin
+router.get("/api/get/state/:TrangThai", function(req, res){
+    if(admin)
+        getOrderByState(req,res);
+    else
+        res.json({success:false, message:"You are not allowed to access this site"});
 });
 
 module.exports = router;
